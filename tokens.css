@@ -1,0 +1,179 @@
+/* ============================================================
+   知到 ZhiDao · 设计系统 · Web 载体 Design Tokens
+   知到 DS v1.1 · 2026-07-14 · 修订记录见 design-system.md
+   ------------------------------------------------------------
+   事实来源: docs/prd/zhidao-prd-v1.2.html(逐值校验 2026-07-14)
+           + docs/share/__back/《从0到1，用AI Agent搭一个能跑的产品》.pptx
+   总纲: ./design-system.md
+   数字分工: 对比度数值的权威所在册是 reference/color.md, 本文件只标结论;
+   换任何色值先跑 ./check_contrast.py(单对或 --audit)重算再上屏。
+   结构: 一个品牌 × 三个色彩面——
+     ① 纸感浅色面(文档主体)        :root
+     ② 暖深面(文档内深色嵌入块)     [data-mode="ink"]
+     ③ 冷深面(演讲/深色科技风)      [data-mode="deep"]
+   用法: 新 HTML 文档直接引入本文件(组件几何配 zd-components.css),
+   组件样式一律引用语义 token(--text-1/--brand/--bg-1 …), 不直接写 hex。
+   ============================================================ */
+
+:root {
+  /* ---- 原始色板 · 纸感浅色面(PRD 实测) ---- */
+  --ink: #181A1F;        /* 近黑主文字; 也是暖深面的底色 */
+  --paper: #F5F3EC;      /* 暖纸页底(全系统对比度基准面, 最不利面) */
+  --surface: #FBFAF5;    /* 卡片底(比纸底亮半档) */
+  --surface-2: #FDFCF9;  /* 更亮的卡片底/斑马行 */
+  --pine: #1E5A44;       /* 品牌松绿 = 浅色面的「知到绿」 */
+  --pine-deep: #0F3526;  /* dg-core SVG 描边专用(v1.1 转正)。考古: 原文档曾定义 --pine-deep:#16402F 但从未使用, dg-core 描边实际硬编码 #0F3526——转正取实际渲染值, 弃用从未上过屏的 #16402F */
+  --moss: #3E7A5C;       /* 苔绿, 松绿的亮一档(次级正向) */
+  --clay: #B5532F;       /* 陶土红 = 负向/风险/对比项(浅底作字压线不足 AA, 限加粗/大字) */
+  --clay-soft: #FBEFE7;  /* 陶土淡染底 */
+  --amber: #C8932E;      /* 琥珀 = 警示/亮点/稀缺(纸底上只当色块/描边, 当文字不达标, 数字见 color.md §4.1) */
+  --amber-soft: #F6ECCF; /* 琥珀淡染底 */
+  --amber-text: #7D5A0D; /* 琥珀的「可读文字档」(v1.1 定版, paper 面 AA ✓, 数字见 color.md §4.1)。考古: 原片用 #946A10, 对 paper 仅 4.37:1 ✗(4.64 是对卡底 surface 的精选值), 已弃用 */
+  --amber-text-2: #9A6F12; /* 考古: 原片 amber chip 字(对 amber-soft 3.83:1, 边缘); 新制品 chip 字一律用 --warm-text */
+  --graphite: #565851;   /* 次级文字/表头 */
+  --mute: #6E706A;       /* 弱化文字(v1.1 加深定版, paper 面 AA ✓, 数字见 color.md §4.1; 用途不变: 11-12px 元信息, 不承载正文)。考古: 原片 #8A8C82 仅 3.07:1。注意 WCAG 大字线是 ≥24px regular / ≥18.66px bold, 小字元信息从无豁免 */
+  --line: #E5E1D4;       /* 常规分隔线 */
+  --line-strong: #D3CDBC;/* 强分隔线/描边 */
+  /* v1.1 清理: 死 token --ink-soft #23262E / --ink-2 #2D313B(原文档定义未用)已删除 */
+
+  /* ---- 版心与圆角 ---- */
+  --maxw: 1160px;        /* 版心; 双栏 shell = 236px 侧栏 + 54px gap + 正文 */
+  --r: var(--r-card);    /* 大卡圆角(历史别名, 原片 zd-card 用 14px)。全刻度: 2/3/5/6/7/8/9/10/12/14/16/999px */
+
+  /* ---- 间距与圆角刻度(v1.1 新增, 评审#8; 归纳自 layout-components §1.1/§1.2) ---- */
+  /* 间距: 4px 原子步长。原片间距未严格吸附(15/18/22px 等原值留在 zd-components.css), 新制品建议取刻度值 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 28px;          /* 版心水平 padding 档 */
+  /* 圆角四级(layout-components §1.2 口径「行内 6-7 / 卡 10-12 / 画布 14-16 / 胶囊 999」;
+     --r-card 取 zd-card 本尊的原片值 14px——分册刻度在卡档有歧义, 以原片值定版) */
+  --r-chip: 6px;         /* 行内小件(chip/pchip/call ic) */
+  --r-card: 14px;        /* 卡片(zd-card/zd-road 原片值; mini/story 等 10-12px 原值见组件册) */
+  --r-canvas: 16px;      /* 大画布(diagram/method) */
+  --r-pill: 999px;       /* 胶囊(pill/soulbadge/road-tag) */
+
+  /* ---- 字族(三栈分工: 展示/正文/标签) ---- */
+  --disp: "Space Grotesk","PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --body: "PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono: "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  /* ---- 语义层(组件一律引用这一层) ---- */
+  --bg-0: var(--paper);
+  --bg-1: var(--surface);
+  --bg-2: var(--surface-2);
+  --text-1: var(--ink);
+  --text-2: var(--graphite);
+  --text-3: var(--mute);
+  --brand: var(--pine);        /* 绿=品牌/正向/核心 */
+  --brand-2: var(--moss);
+  --warm: var(--amber);        /* 金=警示/亮点/稀缺(点睛, 全局唯一焦点为佳) */
+  --warm-text: var(--amber-text);
+  --negative: var(--clay);     /* 红陶=负向/风险/对比中的「旧世界」 */
+  --border-1: var(--line);
+  --border-strong: var(--line-strong); /* 中性强描边(v1.1: 原 --border-2 拆分——strong 三面永远中性) */
+  --border-accent: rgba(30,90,68,.35); /* 品牌强调描边(v1.1 新增; 浅面=淡染描边最强档, 深面见各自覆写) */
+  --on-solid: #FFF;            /* 实色上的字(pine/moss/clay 实底反白; 语义映射见 color.md §2.1) */
+  /* 淡染公式: 语义色 8% 铺底 + 20-35% 描边, 例
+     绿: rgba(30,90,68,.08) 底 / rgba(30,90,68,.2~.35) 边
+     陶: rgba(181,83,47,.04~.05) 底 / rgba(181,83,47,.25~.3) 边
+     选中态/荣誉态再加 linear-gradient(180deg, rgba(30,90,68,.04~.06), var(--surface)) */
+}
+
+/* ------------------------------------------------------------
+   暖深面 · 文档内深色嵌入块(hero / code / diagram / footer)
+   底色是暖黑 --ink #181A1F(不是演讲的冷蓝黑), 四彩换「深底亮档」:
+   绿→薄荷, 琥珀→沙金, 另有代码蓝/玫瑰双辅色。
+   ------------------------------------------------------------ */
+[data-mode="ink"] {
+  --bg-0: #181A1F;
+  --bg-1: #22262E;        /* 图示节点底(dg-box) */
+  --bg-2: #2A2D34;        /* 分隔线/代码窗栏线 */
+  --text-1: #EFEDE6;      /* 大标题米白(hero); 代码区正文 #D8D6CE */
+  --text-2: #C7C9C0;      /* 导语 */
+  --text-3: #9A9D95;      /* 元信息/图例 */
+  --brand: #6FBF95;       /* 薄荷绿: 深底上的「知到绿」(文件名/链接/图标) */
+  --brand-2: #BFE3CF;     /* 雾绿: 核心节点副标(dg-sub-core)。v1.1 补覆写——此前继承浅面 moss, 深底仅 3.43:1 ✗ */
+  --warm: #C9A86A;        /* 沙金: 深底上的琥珀(代码字符串) */
+  --warm-text: var(--warm); /* v1.1 补覆写——此前继承浅面深琥珀 #946A10(深底 3.59:1 ✗); 暖深面文字档=沙金 */
+  --negative: #E2A4A4;    /* 玫瑰: 深底上的负向(代码高亮 .h) */
+  --info: #7FB7E8;        /* 代码键名蓝(仅代码/图示场景) */
+  --comment: #7E8479;     /* 注释灰绿(对 #181A1F 压线达标, 数字见 color.md §4.2) */
+  --border-1: #2A2D34;
+  --border-strong: #34383F; /* pill 描边(v1.1: 原 --border-2 更名, 语义不变=中性强线) */
+  --border-accent: var(--brand); /* 品牌强调描边(补全推定: 原片暖深面无强调边实例, 类推品牌亮档) */
+  --on-solid: #FFF;       /* 核心节点反白 */
+  /* 氛围光: 两枚径向渐变, 品牌绿 32% + 琥珀 10%, 打在对角
+     radial-gradient(680px 420px at 88% -10%, rgba(30,90,68,.32), transparent 60%),
+     radial-gradient(520px 360px at 6% 120%, rgba(200,147,46,.10), transparent 62%) */
+}
+
+/* ------------------------------------------------------------
+   冷深面 · 演讲/深色科技风(把 PPT 色板带回 Web 用)
+   底是冷蓝黑三阶 + 面板两阶, 文字灰阶只有两档, 强调三色。
+   ------------------------------------------------------------ */
+[data-mode="deep"] {
+  --bg-abyss: #03070E;    /* 渐变压暗的最深档 */
+  --bg-0: #06111A;        /* 页底 */
+  --bg-05: #0C1418;       /* 过渡档(表头深字也用它) */
+  --bg-1: #142028;        /* 面板/终端窗体/高亮框底 */
+  --bg-2: #1B2735;        /* 次面板/终端标题栏 */
+  --text-1: #E6EDF3;      /* 主文字 */
+  --text-2: #8A97A3;      /* 次文字(灰阶仅此两档, 不设中间档) */
+  --text-3: #8A97A3;
+  --brand: #16C79A;       /* 青绿: 冷深面的「知到绿」 */
+  --brand-2: var(--brand); /* v1.1 补覆写: PPT 单绿制, 冷深面无独立次级绿——需过程档时从青绿降饱和派生(待定义, 见 color.md §3.2), 别把浅面 moss 搬上深底 */
+  --warm: #E0B84A;        /* 暖金: 结论/金句(深底全 AAA) */
+  --warm-text: var(--warm); /* v1.1 补覆写: 冷深面文字档=暖金本尊(此前继承浅面深琥珀, 深底不达标) */
+  --warm-hot: #FFC000;    /* 亮金: 只在「临门一脚」的收尾强调(原片仅 2 页) */
+  --negative: #E2A4A4;    /* 玫瑰(v1.1 定版, color.md §6 提名, 双底 AAA)。考古: 深面原生层无负向实色, 负向靠压灰+✗; v1.0 曾误装终端红 #FF5F56 */
+  --dot-red: #FF5F56;     /* 终端窗红点(组件级, 非语义负向; 三点 #FF5F56/#FFBD2E/#27C93F) */
+  --border-1: #243441;    /* 中性描边 1pt */
+  --border-strong: var(--border-1); /* 冷深面中性描边仅一档(1pt「隐形边」), strong 与 1 同值(color.md §2.1) */
+  --border-accent: var(--brand); /* 品牌强调描边 #16C79A(v1.1: 原 --border-2 的深面值挂到这里——描边语义主通道是颜色, 粗细规格见 tokens_deck.py) */
+  --on-solid: var(--bg-05); /* 青绿/暖金表头上的反深字 */
+  /* 禁用 #00B050(原片两处属色板漂移, 统一用 --brand) */
+}
+
+/* ============================================================
+   交互状态最小集(v1.1 新增, 评审#9)——样板规则, 可直接生效/复制
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+a {
+  transition: color .15s, background .15s;   /* 原片 zd-nav 的唯一动效实践, 提为通则 */
+}
+a:hover {
+  color: var(--text-1);                      /* hover 加深: 链接色加深到主文字(原片 zd-nav a:hover 实践) */
+}
+button:hover,
+.zd-hover-tint:hover {
+  background: rgba(30,90,68,.06);            /* hover 淡染: 沿用淡染公式的铺底档 rgba(品牌色,.04-.1) */
+}
+[disabled],
+[aria-disabled="true"],
+.is-disabled {
+  color: var(--text-3);                      /* disabled 灰阶: 弱化字 + 常规底/边, 不再表态 */
+  background: var(--bg-2);
+  border-color: var(--border-1);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }            /* 平滑滚动必配的无障碍兜底(总纲迁移指南硬规则) */
+}
+
+/* ------------------------------------------------------------
+   跨面禁忌(校验实测; 此处只留方向性结论, 数字权威=reference/color.md
+   §4.1/§4.4 与 §7 Don't, 基准 paper #F5F3EC):
+   · 浅面 --pine 文字放到冷深底远不达标 → 深面一律换 #16C79A/#6FBF95
+   · 冷深 --brand #16C79A 放到纸底远不达标 → 浅面用 --pine
+   · 冷深 --text-2 #8A97A3 放到纸底不达标 → 浅面用 --graphite
+   · --amber #C8932E 在纸底当文字不达标 → 用 --amber-text #7D5A0D
+   · #00B050 与 #16C79A 同底几乎不可辨, 混用等于色板漂移 → 禁用前者
+   ------------------------------------------------------------ */

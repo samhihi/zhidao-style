@@ -1,0 +1,329 @@
+/* ============================================================
+   知到 ZhiDao · 设计系统 · Web 组件层(zd-components.css)
+   知到 DS v1.1 · 2026-07-14 · 修订记录见 design-system.md
+   ------------------------------------------------------------
+   从 zhidao-prd-v1.2.html <style>(L10-273)抽取校验, v1.1(评审#8)。
+   依赖: 与 tokens.css 并列引入(先 tokens 后本文件)。
+   规矩: 组件只引用语义 token 与淡染公式 rgba, 不写裸 hex;
+        原片一次性微调档收进下方「组件级补充 token」并注考古值;
+        几何(内距/圆角/断点)以本文件为准, 分册表格仅作核对。
+   深色嵌入块契约: zd-hero / zd-code / zd-diagram / zd-footer 四组件
+        须在元素上挂 data-mode="ink"(SKILL QA 静态自查项), 否则语义
+        token 落在浅面值上, 深块直接失效。
+   断点 7 级(评审口径): ≤900 / ≤760 / ≤720 / ≤680 / ≤640 / ≤560 / ≤440;
+        ≤900px 目录降级为锚点 chip 行(v1.1, 评审#11), 不再 display:none。
+   ============================================================ */
+
+/* ---- 组件级补充 token(原片一次性档位, 不进 tokens.css 语义层;
+        色彩归档见 color.md §2.2 中性灰阶 / §2.4 深块小色板) ---- */
+:root {
+  --text-lead: #2C2F36;       /* 导语档(p.lead; color.md §2.1「导语」) */
+  --th-bg: #EFEDE5;           /* 表头底 */
+  --chip-neutral-bg: #ECEAE2; /* 中性 chip / 表内 code / road-tag 底 */
+  --chip-neutral-fg: #41444C; /* 中性 chip 字 */
+  --badge-p2-bg: #E3DFD2;     /* P2 徽章底 */
+  --paper-amber: #FCFAF2;     /* 琥珀染纸(changelog / call.amber 底) */
+  --paper-clay: #FCF4F0;      /* 陶土染纸(call.clay 底) */
+  --bg-pop: #FFF;             /* step/kit 白底(比 surface-2 再亮至顶) */
+  --edge-dark: #000;          /* 深色嵌入块外缘黑描边(print 时 hero 换 2px 黑线) */
+}
+[data-mode="ink"] {
+  --code-text: #D8D6CE;       /* 代码区正文 */
+  --dg-line: #3A3E47;         /* dg-box 中性描边 */
+  --dg-arrow: #5C6068;        /* 图示箭头 */
+  --dg-raw-bg: #2E241F;       /* raw 层暖褐染底(彩染公式: 品牌色掺墨极暗底+原色描边) */
+  --dg-note-bg: #212B26;      /* notes 层墨绿染底 */
+  --dg-out-bg: #1B2A24;       /* 输出层染底 */
+}
+
+/* ---- 基底 ---- */
+* { box-sizing: border-box }
+html { scroll-behavior: smooth }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto } } /* 无障碍兜底(与 tokens.css 样板同款) */
+body { margin: 0; background: var(--bg-0); color: var(--text-1); font-family: var(--body); font-size: 16px; line-height: 1.72; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility }
+::selection { background: var(--brand); color: var(--on-solid) }
+
+/* ---- 粘性顶栏 zd-topbar ---- */
+.zd-topbar { position: sticky; top: 0; z-index: 60; background: rgba(245,243,236,.86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-1) } /* 玻璃拟态: paper 86% + blur(10), color.md §5.4 */
+.zd-topbar-in { max-width: var(--maxw); margin: 0 auto; padding: 13px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px }
+.zd-brand { display: flex; align-items: center; gap: 11px; font-family: var(--disp); font-weight: 600 }
+.zd-mark { width: 26px; height: 26px; border-radius: 7px; background: var(--brand); display: grid; place-items: center; color: var(--on-solid); font-family: var(--mono); font-size: 13px; font-weight: 600; flex: none }
+.zd-brand b { font-size: 15.5px }
+.zd-brand small { color: var(--text-3); font-family: var(--mono); font-size: 11.5px; margin-left: 2px }
+.zd-topmeta { font-family: var(--mono); font-size: 11.5px; color: var(--text-2); letter-spacing: .04em }
+.zd-topmeta .dot { color: var(--negative) }
+.zd-progress { height: 2px; background: transparent; width: 100% }
+.zd-progress span { display: block; height: 100%; width: 100%; background: var(--brand); transform: scaleX(0); transform-origin: left; transition: transform .08s linear }
+
+/* ---- 深墨首屏 zd-hero(挂 data-mode="ink") ---- */
+.zd-hero { background: var(--bg-0); color: var(--text-1); position: relative; overflow: hidden; border-bottom: 1px solid var(--edge-dark) }
+.zd-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(680px 420px at 88% -10%, rgba(30,90,68,.32), transparent 60%), radial-gradient(520px 360px at 6% 120%, rgba(200,147,46,.10), transparent 62%); pointer-events: none } /* 氛围光公式: 绿主金辅、对角布光 */
+.zd-hero-in { max-width: var(--maxw); margin: 0 auto; padding: 72px 28px 60px; position: relative }
+.zd-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--amber); margin: 0 0 22px } /* amber 原档深底直用(eyebrow), color.md §4.2 */
+.zd-h1 { font-family: var(--disp); font-weight: 600; letter-spacing: -.01em; font-size: clamp(38px,6.4vw,76px); line-height: 1.02; margin: 0 0 6px }
+.zd-h1 .cn { display: block; font-size: clamp(40px,6.8vw,80px) }
+.zd-h1 .en { color: var(--comment); font-weight: 400; font-size: clamp(18px,2.4vw,26px); letter-spacing: .06em; margin-top: 10px }
+.zd-lede { max-width: 620px; margin: 26px 0 0; color: var(--text-2); font-size: clamp(16px,1.8vw,19px); line-height: 1.65 }
+.zd-lede b { color: var(--text-1); font-weight: 600 } /* 考古: 原片 #F2F0E9 微调档, 并入 text-1 */
+.zd-thesis { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 38px }
+.zd-pill { font-family: var(--mono); font-size: 13.5px; font-weight: 500; padding: 9px 15px; border-radius: var(--r-pill); border: 1px solid var(--border-strong); background: rgba(255,255,255,.03); color: var(--text-1); display: inline-flex; align-items: center; gap: 8px } /* 考古: 原片字 #E6E4DC, 并入 text-1 */
+.zd-pill i { font-style: normal; color: var(--amber) }
+.zd-pill.pine { border-color: rgba(62,122,92,.5); background: rgba(30,90,68,.18) }
+.zd-pill.pine i { color: var(--brand) }
+
+/* ---- 档案条 zd-metastrip ---- */
+.zd-metastrip { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--border-1); background: var(--bg-1) }
+.zd-metastrip > div { padding: 18px 4px 18px 0; border-right: 1px solid var(--border-1) }
+.zd-metastrip > div:last-child { border-right: 0 }
+.zd-metastrip dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--text-3); text-transform: uppercase; margin: 0 0 5px }
+.zd-metastrip dd { margin: 0; font-weight: 600; font-size: 15px }
+.zd-metastrip dd small { display: block; font-weight: 400; color: var(--text-2); font-size: 12.5px; margin-top: 2px; font-family: var(--mono) }
+.zd-metastrip .live { color: var(--brand) }
+
+/* ---- 双栏 shell + 侧栏目录 zd-nav ---- */
+.zd-shell { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 236px minmax(0,1fr); gap: 54px; align-items: start }
+.zd-nav { position: sticky; top: 78px; align-self: start; padding: 42px 0 40px; max-height: calc(100vh - 90px); overflow: auto }
+.zd-nav-title { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); padding: 0 0 14px; border-bottom: 1px solid var(--border-1); margin-bottom: 10px }
+.zd-nav ol { list-style: none; margin: 0; padding: 0; counter-reset: nv }
+.zd-nav li { counter-increment: nv }
+.zd-nav a { display: flex; gap: 11px; align-items: baseline; text-decoration: none; color: var(--text-2); font-size: 13.5px; padding: 6px 10px 6px 0; border-radius: 7px; transition: color .15s, background .15s; line-height: 1.35 }
+.zd-nav a::before { content: counter(nv,decimal-leading-zero); font-family: var(--mono); font-size: 11px; color: var(--border-strong); flex: none; width: 20px; transition: color .15s }
+.zd-nav a:hover { color: var(--text-1) }
+.zd-nav a.active { color: var(--brand); font-weight: 600 }
+.zd-nav a.active::before { color: var(--brand) }
+.zd-doc { padding: 44px 0 90px; min-width: 0 }
+
+/* ---- 修订记录卡 zd-changelog ---- */
+.zd-changelog { border: 1px solid var(--border-1); border-left: 3px solid var(--warm); background: var(--paper-amber); border-radius: 10px; padding: 18px 22px; margin: 0 0 38px }
+.zd-changelog .clh { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; color: var(--warm-text); text-transform: uppercase; margin-bottom: 11px; display: flex; align-items: center; gap: 8px } /* 考古: 原片 #946a10, v1.1 文字档定版 #7D5A0D */
+.zd-changelog .node-tit { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; color: var(--warm-text); text-transform: uppercase; margin-bottom: 11px; display: flex; align-items: center; gap: 8px; font-style: italic }
+.zd-changelog ul { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 30px }
+.zd-changelog li { font-size: 13px; margin: 5px 0; padding-left: 18px; position: relative; break-inside: avoid }
+.zd-changelog li::before { content: "+"; position: absolute; left: 2px; top: 0; color: var(--warm); font-family: var(--mono); font-weight: 600 }
+@media (max-width:640px) { .zd-changelog ul { columns: 1 } }
+
+/* ---- 章节骨架 zd-sec ---- */
+.zd-sec { padding: 34px 0; scroll-margin-top: 84px; border-top: 1px solid var(--border-1) }
+.zd-sec:first-of-type { border-top: 0; padding-top: 8px }
+.zd-sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px }
+.zd-kicker { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--negative); border: 1px solid var(--border-strong); border-radius: 7px; padding: 3px 9px; flex: none; background: var(--bg-1) }
+.zd-sec h2 { font-family: var(--disp); font-weight: 600; font-size: clamp(24px,3vw,31px); letter-spacing: -.01em; margin: 0; line-height: 1.15 }
+.zd-sec .sub { color: var(--text-2); margin: 2px 0 24px 56px; font-size: 14.5px }
+@media (max-width:560px) { .zd-sec .sub { margin-left: 0 } }
+
+/* ---- 正文排印(.zd-doc 内) ---- */
+.zd-doc h3 { font-family: var(--disp); font-weight: 600; font-size: 18.5px; margin: 34px 0 12px; display: flex; align-items: center; gap: 10px }
+.zd-doc h3 .hx { font-family: var(--mono); font-size: 12px; color: var(--brand-2); font-weight: 500 }
+.zd-doc h4 { font-size: 15px; font-weight: 700; margin: 22px 0 8px; color: var(--text-1) }
+.zd-doc p { margin: 0 0 14px }
+.zd-doc p.lead { font-size: 17px; color: var(--text-lead) }
+.zd-doc strong { font-weight: 700 }
+.zd-doc a { color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px }
+.zd-doc ul, .zd-doc ol { margin: 0 0 16px; padding-left: 0; list-style: none }
+.zd-doc li { position: relative; padding-left: 22px; margin: 7px 0 }
+.zd-doc ul > li::before { content: ""; position: absolute; left: 3px; top: 11px; width: 6px; height: 6px; background: var(--brand); border-radius: 2px; transform: rotate(45deg) } /* 菱形列表符(SKILL QA 自查项) */
+.zd-doc ol { counter-reset: ol }
+.zd-doc ol > li { counter-increment: ol }
+.zd-doc ol > li::before { content: counter(ol); position: absolute; left: 0; top: 1px; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--negative) }
+
+/* ---- 行内胶囊 zd-chip ---- */
+.zd-chip { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--brand); background: rgba(30,90,68,.08); border: 1px solid rgba(30,90,68,.2); padding: 1px 7px; border-radius: var(--r-chip); white-space: nowrap }
+.zd-chip.clay { color: var(--negative); background: var(--clay-soft); border-color: rgba(181,83,47,.25) }
+.zd-chip.amber { color: var(--warm-text); background: var(--amber-soft); border-color: rgba(200,147,46,.3) } /* 考古: 原片字 #9a6f12(3.83:1 边缘), v1.1 统一走文字档 */
+.zd-chip.ink { color: var(--chip-neutral-fg); background: var(--chip-neutral-bg); border-color: var(--border-strong) }
+
+/* ---- 基础卡 zd-card ---- */
+.zd-card { background: var(--bg-1); border: 1px solid var(--border-1); border-radius: var(--r); padding: 22px 24px; margin: 0 0 18px }
+.zd-card.tight { padding: 16px 18px }
+
+/* ---- 引注条 zd-call(全文档最高频) ---- */
+.zd-call { border: 1px solid var(--border-1); border-left: 3px solid var(--brand); background: var(--bg-2); border-radius: 10px; padding: 15px 18px; margin: 18px 0; display: flex; gap: 13px; align-items: flex-start }
+.zd-call .ic { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .06em; color: var(--brand); background: rgba(30,90,68,.1); border-radius: var(--r-chip); padding: 3px 7px; flex: none; margin-top: 1px; text-transform: uppercase }
+.zd-call p { margin: 0; font-size: 14.5px }
+.zd-call.amber { border-left-color: var(--warm); background: var(--paper-amber) }
+.zd-call.amber .ic { color: var(--warm-text); background: var(--amber-soft) } /* 考古: 原片 #946a10 */
+.zd-call.clay { border-left-color: var(--negative); background: var(--paper-clay) }
+.zd-call.clay .ic { color: var(--negative); background: var(--clay-soft) }
+
+/* ---- 通用网格 + 编号小卡 ---- */
+.zd-g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0 }
+.zd-g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 18px 0 }
+@media (max-width:680px) { .zd-g2, .zd-g3 { grid-template-columns: 1fr } }
+.zd-mini { background: var(--bg-1); border: 1px solid var(--border-1); border-radius: 12px; padding: 18px }
+.zd-mini .num { font-family: var(--mono); font-size: 12px; color: var(--negative); font-weight: 600; margin-bottom: 8px }
+.zd-mini h4 { margin: 0 0 6px; font-size: 14.5px }
+.zd-mini p { margin: 0; font-size: 13.5px; color: var(--text-2); line-height: 1.6 }
+
+/* ---- 圆角滚动表 zd-tablewrap + table.zd-t ---- */
+.zd-tablewrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--border-1); border-radius: 12px }
+table.zd-t { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 560px }
+table.zd-t th { text-align: left; font-family: var(--mono); font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--text-2); background: var(--th-bg); padding: 12px 16px; border-bottom: 1px solid var(--border-strong); font-weight: 600; white-space: nowrap }
+table.zd-t td { padding: 13px 16px; border-bottom: 1px solid var(--border-1); vertical-align: top; line-height: 1.55 }
+table.zd-t tr:last-child td { border-bottom: 0 }
+table.zd-t tbody tr:nth-child(even) { background: var(--bg-2) }
+table.zd-t td.k { font-weight: 600; color: var(--text-1); white-space: nowrap }
+table.zd-t .yes { color: var(--brand); font-weight: 600 }
+table.zd-t .no { color: var(--negative); font-weight: 600 }
+table.zd-t code { font-family: var(--mono); font-size: 12.5px; background: var(--chip-neutral-bg); padding: 1px 5px; border-radius: 5px }
+
+/* ---- 深墨终端窗 zd-code(挂 data-mode="ink") ---- */
+.zd-code { background: var(--bg-0); color: var(--code-text); border-radius: 12px; margin: 18px 0; overflow: hidden; border: 1px solid var(--edge-dark) }
+.zd-code-bar { display: flex; align-items: center; gap: 8px; padding: 11px 16px; border-bottom: 1px solid var(--border-1); font-family: var(--mono); font-size: 12px; color: var(--text-3) }
+.zd-code-bar .fn { margin-left: auto; color: var(--brand) }
+.zd-code pre { margin: 0; padding: 18px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.7 }
+.zd-code .c { color: var(--comment) } .zd-code .k { color: var(--info) } .zd-code .s { color: var(--warm) } .zd-code .p { color: var(--brand) } .zd-code .h { color: var(--negative) } /* 语法五色 = 暖深面语义层原值 */
+.zd-ingest-arrow { text-align: center; font-family: var(--mono); font-size: 12px; color: var(--brand-2); margin: -4px 0 -2px; letter-spacing: .05em }
+
+/* ---- 四层存储堆叠 zd-stack + zd-layer ---- */
+.zd-stack { margin: 20px 0; display: flex; flex-direction: column; gap: 9px }
+.zd-layer { display: grid; grid-template-columns: 140px 1fr; gap: 16px; align-items: center; border: 1px solid var(--border-1); border-radius: 12px; padding: 16px 18px; background: var(--bg-1); position: relative }
+.zd-layer .lhead { display: flex; flex-direction: column; gap: 4px }
+.zd-layer .lcode { font-family: var(--mono); font-size: 12.5px; font-weight: 600 }
+.zd-layer .lname { font-weight: 700; font-size: 15px }
+.zd-layer .ldesc { font-size: 13.5px; color: var(--text-2); line-height: 1.55 }
+.zd-layer .ldesc b { color: var(--text-1) }
+.zd-layer[data-l="raw"] { border-left: 4px solid var(--negative) } .zd-layer[data-l="raw"] .lcode { color: var(--negative) }
+.zd-layer[data-l="notes"] { border-left: 4px solid var(--brand-2) } .zd-layer[data-l="notes"] .lcode { color: var(--brand-2) }
+.zd-layer[data-l="wiki"] { border-left: 4px solid var(--brand); background: linear-gradient(90deg,rgba(30,90,68,.05),var(--bg-1) 40%) } .zd-layer[data-l="wiki"] .lcode { color: var(--brand) }
+.zd-layer[data-l="briefs"] { border-left: 4px solid var(--warm) } .zd-layer[data-l="briefs"] .lcode { color: var(--warm-text) } /* 考古: 原片 #946a10 */
+.zd-soulbadge { position: absolute; top: 13px; right: 16px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; color: var(--on-solid); background: var(--brand); padding: 2px 8px; border-radius: var(--r-pill) }
+@media (max-width:560px) { .zd-layer { grid-template-columns: 1fr; gap: 8px } .zd-soulbadge { position: static; align-self: flex-start; margin-top: 4px } }
+
+/* ---- 深墨 SVG 画布 zd-diagram(挂 data-mode="ink") ---- */
+.zd-diagram { background: var(--bg-0); border-radius: var(--r-canvas); padding: 26px 22px 20px; margin: 22px 0; overflow: hidden; border: 1px solid var(--edge-dark) }
+.zd-diagram .dtitle { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px }
+.zd-diagram .dtitle b { font-family: var(--disp); color: var(--text-1); font-size: 15px; font-weight: 600 } /* 考古: 原片 #F1EFE8 微调档 */
+.zd-diagram .dtitle span { font-family: var(--mono); font-size: 11px; color: var(--comment); letter-spacing: .1em }
+.zd-svgscroll { overflow-x: auto }
+.zd-svgscroll svg { display: block; min-width: 760px; width: 100%; height: auto }
+.zd-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-1); font-family: var(--mono); font-size: 11px; color: var(--text-3) }
+.zd-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px }
+/* dg-* 彩染面板公式(color.md §2.4): 品牌色掺墨极暗底 + 品牌原色描边;
+   描边引用原始色板(--clay/--moss/--pine)而非语义层——ink 面 --negative 是文字玫瑰, 不作图形描边 */
+.dg-box { fill: var(--bg-1); stroke: var(--dg-line) }
+.dg-box-raw { fill: var(--dg-raw-bg); stroke: var(--clay) } /* clay 原档深底当描边(图形达标), color.md §4.2 */
+.dg-box-note { fill: var(--dg-note-bg); stroke: var(--moss) }
+.dg-core { fill: var(--pine); stroke: var(--pine-deep) } /* v1.1: 原片硬编码 #0F3526 收编为 --pine-deep(评审#23) */
+.dg-out { fill: var(--dg-out-bg); stroke: var(--moss) }
+.dg-lbl { fill: var(--text-1); font-family: var(--body); font-weight: 600; font-size: 15px } /* 考古: 原片 #EEECE4 微调档 */
+.dg-lbl-core { fill: var(--on-solid); font-family: var(--body); font-weight: 700; font-size: 16px }
+.dg-sub { fill: var(--text-3); font-family: var(--mono); font-size: 10.5px } /* 考古: 原片 #9DA09A 微调档 */
+.dg-sub-core { fill: var(--brand-2); font-family: var(--mono); font-size: 10.5px } /* 雾绿, v1.1 起有 token 可引 */
+.dg-eye { fill: var(--brand); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; font-weight: 600 }
+.dg-arrow { stroke: var(--dg-arrow); stroke-width: 1.7; fill: none } .dg-arrow-lbl { fill: var(--text-3); font-family: var(--mono); font-size: 10px } /* 考古: 原片 #8A8D86 微调档 */
+.dg-loop { stroke: var(--amber); stroke-width: 1.7; fill: none; stroke-dasharray: 6 4 } .dg-loop-lbl { fill: var(--amber); font-family: var(--mono); font-size: 11px; font-weight: 600 } /* amber 原档深底直用(回环) */
+
+/* ---- 正反对比卡 zd-concept ---- */
+.zd-concept { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 }
+@media (max-width:680px) { .zd-concept { grid-template-columns: 1fr } }
+.zd-concept-card { border: 1px solid var(--border-1); border-radius: 12px; padding: 18px; background: var(--bg-1) }
+.zd-concept-card.bad { border-color: rgba(181,83,47,.3) }
+.zd-concept-card.good { border-color: rgba(30,90,68,.35); background: linear-gradient(180deg,rgba(30,90,68,.04),var(--bg-1)) }
+.zd-concept-card .ct { font-family: var(--mono); font-size: 12px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 7px }
+.zd-concept-card.bad .ct { color: var(--negative) } .zd-concept-card.good .ct { color: var(--brand) }
+.zd-concept-card h4 { margin: 0 0 6px } .zd-concept-card p { margin: 0; font-size: 13.5px; color: var(--text-2); line-height: 1.6 }
+
+/* ---- 用户故事卡 zd-stories ---- */
+.zd-stories { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0 }
+@media (max-width:720px) { .zd-stories { grid-template-columns: 1fr } }
+.zd-story { border: 1px solid var(--border-1); border-radius: 12px; padding: 18px; background: var(--bg-1) }
+.zd-story .us-id { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--negative); margin-bottom: 9px; display: flex; justify-content: space-between; align-items: center }
+.zd-story .us-id .fl { color: var(--brand) }
+.zd-story .us-body { font-size: 14.5px; line-height: 1.6; margin-bottom: 11px }
+.zd-story .us-body b { color: var(--text-1) }
+.zd-story .us-ac { font-size: 12.5px; color: var(--text-2); border-top: 1px dashed var(--border-strong); padding-top: 9px }
+.zd-story .us-ac span { font-family: var(--mono); font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; display: block; margin-bottom: 3px }
+
+/* ---- 方法论组卡 zd-method / zd-kit / zd-step / zd-loop4 ---- */
+.zd-method { background: var(--bg-1); border: 1px solid var(--border-1); border-radius: var(--r-canvas); padding: 22px; margin: 20px 0 }
+.zd-kit { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px dashed var(--border-strong); font-family: var(--mono); font-size: 13px }
+.zd-kit-item { background: var(--bg-pop); border: 1px solid var(--border-strong); border-radius: 8px; padding: 6px 12px; font-weight: 600; color: var(--text-1) }
+.zd-kit .arr { color: var(--text-3) }
+.zd-kit-feed { margin-left: auto; background: var(--brand); color: var(--on-solid); border-radius: 8px; padding: 6px 12px; font-weight: 500 }
+@media (max-width:640px) { .zd-kit-feed { margin-left: 0 } }
+.zd-loop4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px }
+@media (max-width:720px) { .zd-loop4 { grid-template-columns: 1fr 1fr } }
+@media (max-width:440px) { .zd-loop4 { grid-template-columns: 1fr } }
+.zd-step { border: 1px solid var(--border-strong); border-radius: 12px; padding: 14px 16px; background: var(--bg-pop) }
+.zd-step .sn { font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--brand); line-height: 1; margin-bottom: 8px }
+.zd-step h4 { margin: 0 0 5px; font-size: 14.5px }
+.zd-step p { margin: 0; font-size: 12.5px; color: var(--text-2); line-height: 1.5 }
+.zd-loop-paths { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px }
+.zd-loop-path { flex: 1 1 240px; font-family: var(--mono); font-size: 12.5px; border-radius: 9px; padding: 10px 14px; border: 1px solid var(--border-1) }
+.zd-loop-path.ok { color: var(--brand); background: rgba(30,90,68,.05); border-color: rgba(30,90,68,.25) }
+.zd-loop-path.stop { color: var(--negative); background: rgba(181,83,47,.05); border-color: rgba(181,83,47,.25) }
+
+/* ---- 优先级徽章 zd-pchip ---- */
+.zd-pchip { font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: var(--r-chip); white-space: nowrap; display: inline-block }
+.zd-p0 { color: var(--on-solid); background: var(--negative) } .zd-p1 { color: var(--on-solid); background: var(--brand-2) } .zd-p2 { color: var(--text-2); background: var(--badge-p2-bg) }
+
+/* ---- 三栏路线图 zd-road ---- */
+.zd-road { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin: 22px 0; border: 1px solid var(--border-1); border-radius: var(--r-card); overflow: hidden }
+@media (max-width:760px) { .zd-road { grid-template-columns: 1fr } }
+.zd-road-col { padding: 20px; border-right: 1px solid var(--border-1) }
+.zd-road-col:last-child { border-right: 0 }
+@media (max-width:760px) { .zd-road-col { border-right: 0; border-bottom: 1px solid var(--border-1) } .zd-road-col:last-child { border-bottom: 0 } }
+.zd-road-col.now { background: linear-gradient(180deg,rgba(30,90,68,.06),var(--bg-1)) }
+.zd-road-tag { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; padding: 3px 9px; border-radius: var(--r-pill); display: inline-block; margin-bottom: 12px }
+.zd-road-col.now .zd-road-tag { background: var(--brand); color: var(--on-solid) }
+.zd-road-col:not(.now) .zd-road-tag { background: var(--chip-neutral-bg); color: var(--text-2) }
+.zd-road-col h4 { margin: 0 0 4px; font-size: 15.5px }
+.zd-road-col .goal { font-size: 13px; color: var(--text-2); margin: 0 0 12px; font-style: italic }
+.zd-road-col ul { margin: 0 }
+.zd-road-col li { font-size: 13.5px; margin: 6px 0; padding-left: 18px }
+.zd-road-col ul > li::before { top: 9px; width: 5px; height: 5px }
+
+/* ---- 正负信号卡 zd-sig ---- */
+.zd-sig { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0 }
+@media (max-width:680px) { .zd-sig { grid-template-columns: 1fr } }
+.zd-sig-card { border-radius: 12px; padding: 18px 20px; border: 1px solid var(--border-1) }
+.zd-sig-card.pos { border-color: rgba(30,90,68,.3); background: rgba(30,90,68,.04) }
+.zd-sig-card.neg { border-color: rgba(181,83,47,.3); background: rgba(181,83,47,.04) }
+.zd-sig-card .st { font-family: var(--mono); font-size: 12px; font-weight: 600; margin-bottom: 10px }
+.zd-sig-card.pos .st { color: var(--brand) } .zd-sig-card.neg .st { color: var(--negative) }
+.zd-sig-card ul { margin: 0 } .zd-sig-card li { font-size: 14px; margin: 8px 0 }
+.zd-sig-card.neg ul > li::before { background: var(--negative) }
+
+/* ---- 术语表 zd-gloss ---- */
+.zd-gloss { margin: 18px 0; border-top: 1px solid var(--border-1) }
+.zd-gloss-item { display: grid; grid-template-columns: 170px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--border-1) }
+.zd-gloss-item dt { font-weight: 700; font-size: 14.5px }
+.zd-gloss-item dt small { display: block; font-family: var(--mono); font-size: 11px; color: var(--text-3); font-weight: 400; margin-top: 2px }
+.zd-gloss-item dd { margin: 0; font-size: 14px; color: var(--text-2); line-height: 1.6 }
+@media (max-width:560px) { .zd-gloss-item { grid-template-columns: 1fr; gap: 4px } }
+
+/* ---- 深墨页脚 zd-footer(挂 data-mode="ink") ---- */
+.zd-footer { background: var(--bg-0); color: var(--text-3); padding: 46px 28px; margin-top: 30px }
+.zd-footer-in { max-width: var(--maxw); margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: flex-end }
+.zd-footer b { color: var(--text-1); font-family: var(--disp); font-weight: 600 } /* 考古: 原片 #E6E4DC, 并入 text-1 */
+.zd-footer .meta { font-family: var(--mono); font-size: 12px; line-height: 1.9 }
+.zd-footer a { color: var(--brand) }
+
+/* ---- 页级断点 ≤900px / ≤560px ---- */
+@media (max-width:900px) {
+  .zd-shell { grid-template-columns: 1fr; gap: 0 }
+  /* v1.1(评审#11/D19): 目录不删除, 降级为顶部锚点 chip 行(复用 zd-chip 语法);
+     也可改 markup 包 details/summary 折叠。考古: 原片此处 .zd-nav{display:none}, 目录整体放弃——判为缺陷, 勿仿 */
+  .zd-nav { position: static; max-height: none; overflow: visible; padding: 26px 0 18px; border-bottom: 1px solid var(--border-1) }
+  .zd-nav-title { border-bottom: 0; padding-bottom: 8px; margin-bottom: 4px }
+  .zd-nav ol { display: flex; flex-wrap: wrap; gap: 8px }
+  .zd-nav a { display: inline-flex; padding: 1px 7px; border: 1px solid rgba(30,90,68,.2); background: rgba(30,90,68,.08); color: var(--brand); border-radius: var(--r-chip); font-family: var(--mono); font-size: 12px; font-weight: 500; white-space: nowrap }
+  .zd-nav a::before { content: none }
+  .zd-nav a:hover { color: var(--text-1) }
+  .zd-nav a.active { background: var(--brand); color: var(--on-solid) }
+  .zd-nav a.active::before { content: none }
+  .zd-doc { padding-top: 30px }
+}
+@media (max-width:560px) { .zd-hero-in { padding: 54px 20px 44px } .zd-shell, .zd-topbar-in, .zd-metastrip { padding-left: 20px; padding-right: 20px } .zd-metastrip { grid-template-columns: 1fr 1fr } .zd-metastrip > div:nth-child(2) { border-right: 0 } .zd-topmeta { display: none } }
+
+/* ---- print(全浅色化; #000/#fff/#999 为打印强制黑白字面量, 非色板值) ---- */
+@media print {
+  .zd-topbar, .zd-nav { display: none }
+  .zd-hero { background: #fff; color: #000; border-bottom: 2px solid #000 }
+  .zd-hero::before { display: none }
+  .zd-h1, .zd-eyebrow { color: #000 }
+  .zd-shell { grid-template-columns: 1fr }
+  .zd-diagram, .zd-code, .zd-footer { background: #fff; color: #000; border: 1px solid #999 }
+  body { background: #fff }
+  .zd-sec { break-inside: avoid }
+}

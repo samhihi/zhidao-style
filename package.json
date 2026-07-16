@@ -1,0 +1,46 @@
+{
+  "name": "zhidao-style",
+  "version": "1.1.0",
+  "description": "知到风设计系统 Agent Skill 一键安装器——纸感编辑部风 HTML 文档与深色科技风 deck 的中文设计系统。ZhiDao Style: a Chinese design system packaged as an open-standard Agent Skill (SKILL.md) for Claude Code, Codex, and compatible agents.",
+  "bin": {
+    "zhidao-style": "bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "SKILL.md",
+    "design-system.md",
+    "tokens.css",
+    "zd-components.css",
+    "tokens_deck.py",
+    "check_contrast.py",
+    "index.html",
+    "reference/",
+    "review-20260714.md",
+    "review-pdf-20260715.md",
+    "assets/"
+  ],
+  "engines": {
+    "node": ">=16.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samhihi/zhidao-style.git"
+  },
+  "homepage": "https://github.com/samhihi/zhidao-style#readme",
+  "bugs": {
+    "url": "https://github.com/samhihi/zhidao-style/issues"
+  },
+  "keywords": [
+    "claude-code",
+    "codex",
+    "agent-skills",
+    "skill",
+    "design-system",
+    "design-tokens",
+    "zhidao",
+    "pptx",
+    "chinese"
+  ],
+  "author": "Sam",
+  "license": "MIT"
+}

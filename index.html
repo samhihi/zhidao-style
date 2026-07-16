@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知到设计系统 v1.1 · 导读</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="zd-components.css">
+<style>
+/* ---- 导读页专属样式(zg- 前缀, 只引用语义 token) ---- */
+.zg-face { border: 1px solid var(--border-1); border-radius: var(--r-card); padding: 18px; }
+.zg-face h4 { margin: 0 0 4px; font-size: 14.5px; }
+.zg-face .zg-face-sub { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--text-3); text-transform: uppercase; margin-bottom: 14px; }
+.zg-face.light { background: var(--bg-0); }
+.zg-face.dark { background: var(--bg-0); color: var(--text-1); border-color: var(--edge-dark); }
+.zg-sw { display: flex; align-items: center; gap: 9px; margin: 7px 0; font-family: var(--mono); font-size: 11.5px; color: var(--text-2); }
+.zg-sw i { width: 15px; height: 15px; border-radius: 4px; border: 1px solid var(--border-1); flex: none; }
+.zg-sw b { color: var(--text-1); font-weight: 600; min-width: 3.5em; }
+.zg-grammar { font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--text-2); text-align: center; padding: 14px 10px; border: 1px dashed var(--border-strong); border-radius: 10px; margin: 18px 0; }
+.zg-grammar b { color: var(--brand); } .zg-grammar .warm { color: var(--warm-text); font-weight: 600; } .zg-grammar .neg { color: var(--negative); font-weight: 600; }
+.zg-rule-list { margin: 0; }
+.zg-rule-list li b { color: var(--text-1); }
+.zg-links { font-family: var(--mono); font-size: 12.5px; }
+.zg-nw { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<!-- ===== 顶栏 + 进度条 ===== -->
+<header class="zd-topbar">
+  <div class="zd-topbar-in">
+    <div class="zd-brand">
+      <span class="zd-mark" aria-hidden="true">知</span>
+      <b>知到 · 设计系统</b>
+      <small>DS v1.1</small>
+    </div>
+    <div class="zd-topmeta">GUIDE <span class="dot">·</span> 导读 <span class="dot">·</span> 2026-07</div>
+  </div>
+  <div class="zd-progress" aria-hidden="true"><span id="zgProgress"></span></div>
+</header>
+
+<!-- ===== Hero(暖深面) ===== -->
+<section class="zd-hero" data-mode="ink">
+  <div class="zd-hero-in">
+    <p class="zd-eyebrow">ZHIDAO DESIGN SYSTEM · READER'S GUIDE</p>
+    <h1 class="zd-h1">
+      <span class="cn">一个语法，三个色彩面</span>
+      <span class="en">One grammar, three color faces — a 15-minute guide</span>
+    </h1>
+    <p class="zd-lede">这套系统从两份已交付的制品中<b>反向沉淀</b>：纸感编辑部风的 HTML 产品文档，和 41 页深色科技风演讲 PPT。v1.1 已依对抗性评审逐条修复 29 条发现。本页是导读——先看懂骨架，再按任务钻分册。</p>
+    <div class="zd-thesis">
+      <span class="zd-pill pine"><i>◆</i> 逐断言溯源校验</span>
+      <span class="zd-pill"><i>29/29</i> 评审发现已修复</span>
+      <span class="zd-pill"><i>2</i> 载体 · <i>3</i> 色彩面 · <i>15</i> 版式原型</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 元信息带 ===== -->
+<dl class="zd-metastrip">
+  <div><dt>Version</dt><dd class="live">v1.1<small>2026-07-14 定版</small></dd></div>
+  <div><dt>Carriers</dt><dd>HTML + Deck<small>纸感编辑部 / 深色科技</small></dd></div>
+  <div><dt>Tokens</dt><dd>2 份实现<small>tokens.css / tokens_deck.py</small></dd></div>
+  <div><dt>Reviews</dt><dd>2 轮<small>对抗性评审 + 发行件检验</small></dd></div>
+</dl>
+
+<!-- ===== 双栏 shell ===== -->
+<div class="zd-shell">
+
+  <nav class="zd-nav" aria-label="目录">
+    <div class="zd-nav-title">Contents · 导读目录</div>
+    <ol>
+      <li><a href="#what">这套系统是什么</a></li>
+      <li><a href="#faces">一个语法，三个色彩面</a></li>
+      <li><a href="#principles">六条设计原则</a></li>
+      <li><a href="#map">怎么读：文件地图与任务路由</a></li>
+      <li><a href="#rules">硬规则速记</a></li>
+      <li><a href="#deck">deck 工具链</a></li>
+      <li><a href="#history">版本与评审史</a></li>
+    </ol>
+  </nav>
+
+  <main class="zd-doc">
+
+    <!-- 01 ===================================================== -->
+    <section class="zd-sec" id="what">
+      <div class="zd-sec-head"><span class="zd-kicker">01</span><h2>这套系统是什么</h2></div>
+      <p class="sub">不是从零设计的规范，是从两份真实制品里考古出来的语法</p>
+      <p class="lead">「知到 ZhiDao」设计系统把 <strong>PRD 文档</strong>与<strong>分享 deck</strong> 两份成品拆到像素与 XML 级，提炼成可迁移、可复用的一套语法：色板、字号、版式原型、母题、文案声线，每个数值都能回溯到源文件的具体页码。</p>
+      <div class="zd-call">
+        <span class="ic">定位</span>
+        <p>它服务的场景是「一人 + AI」——你说一句「用知到风做 XX」，AI 照着这套规范产出制品，不再从旧文件里现扒规格，也不再自由发挥。</p>
+      </div>
+      <div class="zd-call amber">
+        <span class="ic">v1.1</span>
+        <p>首版发布当天经四人格对抗性评审（视觉 / UX / PM / 挑刺用户），44 条发现零驳回，29 条去重后全部修复：对比度错值更正、深面 token 补覆写、deck 工具函数落地、发行件检验另有一轮。<strong>当档案读可信，当作业指导书用也不再翻车。</strong></p>
+      </div>
+    </section>
+
+    <!-- 02 ===================================================== -->
+    <section class="zd-sec" id="faces">
+      <div class="zd-sec-head"><span class="zd-kicker">02</span><h2>一个语法，三个色彩面</h2></div>
+      <p class="sub">两份制品表面气质迥异，底层是同一套语法——连接点藏在文档的深色嵌入块里</p>
+
+      <div class="zg-grammar" role="img" aria-label="色彩语法：中性压场，绿立骨，金点睛，红陶或压灰表负向">
+        中性压场 → <b>绿立骨</b> → <span class="warm">金点睛</span> → <span class="neg">红陶/压灰表负向</span>
+      </div>
+
+      <div class="zd-g3">
+        <div class="zg-face light">
+          <h4>① 纸感浅色面</h4>
+          <div class="zg-face-sub">HTML 文档主体 · :root</div>
+          <div class="zg-sw"><i style="background:var(--paper)"></i><b>暖纸</b> #F5F3EC 页底</div>
+          <div class="zg-sw"><i style="background:var(--pine)"></i><b>松绿</b> #1E5A44 品牌</div>
+          <div class="zg-sw"><i style="background:var(--amber)"></i><b>琥珀</b> #C8932E 色块/描边</div>
+          <div class="zg-sw"><i style="background:var(--amber-text)"></i><b>琥珀字</b> #7D5A0D 文字档</div>
+          <div class="zg-sw"><i style="background:var(--clay)"></i><b>陶土</b> #B5532F 负向</div>
+          <div class="zg-sw"><i style="background:var(--ink)"></i><b>近黑</b> #181A1F 主文字</div>
+        </div>
+        <div class="zg-face dark" data-mode="ink">
+          <h4>② 暖深面</h4>
+          <div class="zg-face-sub">文档深色嵌入块 · data-mode="ink"</div>
+          <div class="zg-sw"><i style="background:var(--bg-0)"></i><b>暖黑</b> #181A1F 底</div>
+          <div class="zg-sw"><i style="background:var(--brand)"></i><b>薄荷</b> #6FBF95 深底知到绿</div>
+          <div class="zg-sw"><i style="background:var(--warm)"></i><b>沙金</b> #C9A86A 代码字符串</div>
+          <div class="zg-sw"><i style="background:var(--info)"></i><b>代码蓝</b> #7FB7E8 键名</div>
+          <div class="zg-sw"><i style="background:var(--negative)"></i><b>玫瑰</b> #E2A4A4 负向(仅代码)</div>
+          <div class="zg-sw"><i style="background:var(--text-1)"></i><b>米白</b> 文字四档</div>
+        </div>
+        <div class="zg-face dark" data-mode="deep">
+          <h4>③ 冷深面</h4>
+          <div class="zg-face-sub">演讲 deck · data-mode="deep"</div>
+          <div class="zg-sw"><i style="background:var(--bg-0)"></i><b>冷蓝黑</b> #06111A 六阶底</div>
+          <div class="zg-sw"><i style="background:var(--brand)"></i><b>青绿</b> #16C79A 品牌</div>
+          <div class="zg-sw"><i style="background:var(--warm)"></i><b>暖金</b> #E0B84A 结论/金句</div>
+          <div class="zg-sw"><i style="background:var(--warm-hot)"></i><b>亮金</b> #FFC000 只在临门一脚</div>
+          <div class="zg-sw"><i style="background:var(--text-1)"></i><b>主字</b> #E6EDF3 灰阶仅两档</div>
+          <div class="zg-sw"><i style="background:var(--text-2)"></i><b>次字</b> #8A97A3 无中间档</div>
+        </div>
+      </div>
+
+      <h3><span class="hx">2.1</span>两个统一锚点</h3>
+      <p>跨载体身份的技术根基，换项目也别动：</p>
+      <ul>
+        <li><b>中文字体同源</b>——deck 的「思源黑体」= web 栈里的「Noto Sans SC」，同一款 Source Han Sans 的双发行名。</li>
+        <li><b>字号数字孪生</b>——11.5–31 区间内 web 的 px 与 deck 的 pt 同数值同职责：正文 16px ↔ 15–16.5pt，页题 clamp 24–31px ↔ 29pt，元信息 11–12.5px ↔ 11.5–12.5pt。</li>
+      </ul>
+    </section>
+
+    <!-- 03 ===================================================== -->
+    <section class="zd-sec" id="principles">
+      <div class="zd-sec-head"><span class="zd-kicker">03</span><h2>六条设计原则</h2></div>
+      <p class="sub">从制品中反推出来的，不是先验教条</p>
+      <div class="zd-g3">
+        <div class="zd-mini"><div class="num">P1</div><h4>编辑部的秩序，科技的氛围</h4><p>骨架永远是编号、字典表、左对齐、细分隔线；氛围交给深底、辉光与插画。秩序件从不发光，氛围件从不承载信息。</p></div>
+        <div class="zd-mini"><div class="num">P2</div><h4>骨架恒定，参数自由</h4><p>页眉三件套、版心、编号体系从不漂移；渐变停靠点、插画逐页自由。先锁骨架，再谈自由。</p></div>
+        <div class="zd-mini"><div class="num">P3</div><h4>金色即结论</h4><p>绿是过程与骨架，金只盖章：金句框金边、结论句金字。金一多，结论就没了。</p></div>
+        <div class="zd-mini"><div class="num">P4</div><h4>描边：颜色为主通道</h4><p>观众分不出 0.1pt 差——区分语义的是颜色（中性/品牌绿/金），粗细只是制作规格三档。</p></div>
+        <div class="zd-mini"><div class="num">P5</div><h4>密度反比律</h4><p>字越多图越退（表格页四角光斑），字越少图越进（金句页全幅）。信息密度和插画面积此消彼长。</p></div>
+        <div class="zd-mini"><div class="num">P6</div><h4>mono 标签语法</h4><p>所有系统信息走 JetBrains Mono + 大写 + 宽字距，字号越小字距越大。这层机器感是 AI Native 的身份线索。</p></div>
+      </div>
+    </section>
+
+    <!-- 04 ===================================================== -->
+    <section class="zd-sec" id="map">
+      <div class="zd-sec-head"><span class="zd-kicker">04</span><h2>怎么读：文件地图与任务路由</h2></div>
+      <p class="sub">先读总纲，再按任务钻分册——不用全读</p>
+
+      <div class="zd-tablewrap">
+        <table class="zd-t">
+          <thead><tr><th>文件</th><th>干什么用</th></tr></thead>
+          <tbody>
+            <tr><td class="k"><code>design-system.md</code></td><td>总纲 + 速查。<span class="yes">新项目先读这一份</span></td></tr>
+            <tr><td class="k"><code>tokens.css</code></td><td>Web token：三色彩面 + 语义层 + 交互状态最小集</td></tr>
+            <tr><td class="k"><code>zd-components.css</code></td><td>Web 组件几何 + 断点 + print，与 tokens.css 并列引入</td></tr>
+            <tr><td class="k"><code>tokens_deck.py</code></td><td>deck 常量库 + 函数：<code>add_veil</code> / <code>add_header</code> / <code>add_conclusion_bar</code> / <code>assert_fonts_installed</code> / <code>set_font</code></td></tr>
+            <tr><td class="k"><code>check_contrast.py</code></td><td>WCAG 对比度计算。<span class="no">换任何色值必跑</span> <code>--audit</code></td></tr>
+            <tr><td class="k"><code>reference/</code> 五分册</td><td>color（<b>对比度数字权威</b>）/ typography / layout-components / motifs / voice-ia</td></tr>
+            <tr><td class="k"><code>skill/SKILL.md</code></td><td>zhidao-style 技能正本；安装位是副本，改正本必须同步</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><span class="hx">4.1</span>三条任务路由</h3>
+      <div class="zd-road">
+        <div class="zd-road-col now">
+          <span class="zd-road-tag">任务一 · HTML 文档</span>
+          <h4>纸感编辑部风</h4>
+          <p class="goal">读总纲 + layout-components</p>
+          <ul>
+            <li>引入 tokens.css + zd-components.css，只用语义 token</li>
+            <li>骨架五段式：顶栏 → hero → metastrip → 双栏 shell → footer</li>
+            <li>深色嵌入块挂 <code>data-mode="ink"</code></li>
+            <li>静态自查五条 + 人工视觉核对</li>
+          </ul>
+        </div>
+        <div class="zd-road-col">
+          <span class="zd-road-tag">任务二 · Deck</span>
+          <h4>深色科技风</h4>
+          <p class="goal">读 layout-components + motifs</p>
+          <ul>
+            <li><code>from tokens_deck import *</code>，开工先跑字体检查</li>
+            <li>三层三明治：插画 → <code>add_veil()</code> → 原生文字</li>
+            <li>版式只从 15 原型（L1–L15）里选</li>
+            <li>COM 渲染逐页自检，压暗有硬判据</li>
+          </ul>
+        </div>
+        <div class="zd-road-col">
+          <span class="zd-road-tag">任务三 · 换品牌</span>
+          <h4>迁语法不迁颜色</h4>
+          <p class="goal">读总纲第七节 + color</p>
+          <ul>
+            <li>只改两个 token 文件顶部原始色板层</li>
+            <li>语法与用量比是身份，别动</li>
+            <li>换色后必跑 <code class="zg-nw">check_contrast.py --audit</code></li>
+            <li>冲突规则处置要写进迁移说明</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="zd-call">
+        <span class="ic">入口</span>
+        <p>日常不用记路径——全局技能 <strong>zhidao-style</strong> 已装机，任何项目里说「用知到风做 XX」即自动加载这套规范。</p>
+      </div>
+    </section>
+
+    <!-- 05 ===================================================== -->
+    <section class="zd-sec" id="rules">
+      <div class="zd-sec-head"><span class="zd-kicker">05</span><h2>硬规则速记</h2></div>
+      <p class="sub">违反即不是知到风；具体比值以 color 分册为权威</p>
+      <div class="zd-card">
+        <ul class="zg-rule-list">
+          <li><b>金色即结论</b>——每页一个金色焦点；亮金只留收尾强调页</li>
+          <li><b>描边语义靠颜色</b>——中性 / 品牌绿 / 金各司其职；粗细只是制作规格三档（1.0 / 1.2 / 1.4pt）</li>
+          <li><b>灰阶纪律</b>——deck 文字灰只有两档，别自创中间档；✗ 负向分治：浅面陶土暖红，深面只压灰不发彩</li>
+          <li><b>跨面禁忌</b>——浅面松绿别上深底、深面灰别上纸底、琥珀别当浅底文字；<code>#00B050</code> 禁用（色板漂移）</li>
+          <li><b>版式与页眉收口</b>——只从 15 原型选；完整三件套是内容页体例，章封面用变体，破格页别硬挂面包屑</li>
+          <li><b>密度反比律</b>——字越多图越退，字越少图越进</li>
+          <li><b>秩序与氛围不混</b>——编号/表格/分隔线从不发光，插画/辉光从不承载信息</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 06 ===================================================== -->
+    <section class="zd-sec" id="deck">
+      <div class="zd-sec-head"><span class="zd-kicker">06</span><h2>deck 工具链</h2></div>
+      <p class="sub">v1.1 把「规格散文」变成了可调用的函数——别再手糊</p>
+      <p>压暗渐变纱是 deck 可读性的命门，而 python-pptx 公开 API 做不出带透明度的三停渐变。<code>tokens_deck.py</code> 已封装好 XML 注入，一个新 deck 的骨架代码长这样：</p>
+      <div class="zd-code" data-mode="ink">
+        <div class="zd-code-bar"><span>python</span><span class="fn">new_deck.py</span></div>
+        <pre><span class="k">from</span> tokens_deck <span class="k">import</span> *
+
+assert_fonts_installed()   <span class="c"># 缺思源黑体显式报错，绝不静默落雅黑</span>
+
+<span class="c"># 每页三层三明治：底图 → 压暗纱 → 原生文字</span>
+add_veil(slide)            <span class="c"># 含 alpha 三停渐变，停靠点随画面亮度调</span>
+add_header(slide, <span class="s">"页题"</span>, <span class="s">"第三章"</span>, <span class="s">"工作流"</span>)
+add_conclusion_bar(slide, <span class="s">"结论：先锁骨架，再谈自由"</span>)</pre>
+      </div>
+      <ul>
+        <li><b>插画降级链</b>——①有生图工具按模板生成（顺手产出 alt 文案）②用户供图先校验 ③都没有就 <code>BG_DEEP</code> 纯底 + 压纱 + 四角光斑，同样合规</li>
+        <li><b>压暗硬判据</b>——文字框投影区平均亮度 L&gt;60/255 即判失败，回去调纱；不再自由心证</li>
+        <li><b>QA 收口</b>——PowerPoint COM 渲染逐页自检：金焦点是否唯一、页眉三件套是否恒定、文字是否压在暗区</li>
+      </ul>
+    </section>
+
+    <!-- 07 ===================================================== -->
+    <section class="zd-sec" id="history">
+      <div class="zd-sec-head"><span class="zd-kicker">07</span><h2>版本与评审史</h2></div>
+      <p class="sub">每个数值都被至少两轮独立评审咬过</p>
+      <div class="zd-changelog">
+        <div class="clh">Changelog · v1.1 <span>2026-07-14</span></div>
+        <ul>
+          <li>四人格对抗性评审 29 条发现全部修复（44 条零驳回）</li>
+          <li>琥珀文字档定版 #7D5A0D，弱化灰加深 #6E706A</li>
+          <li>品牌绿描边收口 1.2pt，原则四改「颜色为主通道」</li>
+          <li>tokens_deck 新增 add_veil / add_header 等五函数</li>
+          <li>新增 zd-components.css 组件层与 check_contrast.py</li>
+          <li>交互状态、无障碍三条硬规则、移动端目录降级补齐</li>
+          <li>版式口径收为 15 原型；SLIDE_W 定版真 16:9</li>
+          <li>SKILL 正本入库，变更纪律三件套立规</li>
+        </ul>
+      </div>
+      <p class="zg-links">评审档案：<a href="review-20260714.md">review-20260714.md</a>（对抗性评审 29 条）· <a href="review-pdf-20260715.md">review-pdf-20260715.md</a>（发行版 PDF 视觉检验 41 页）· 修订记录见 <a href="design-system.md">design-system.md</a></p>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===== 页脚(暖深面) ===== -->
+<footer class="zd-footer" data-mode="ink">
+  <div class="zd-footer-in">
+    <div class="meta"><b>知到 ZhiDao</b> · 设计系统导读<br>一个语法，三个色彩面 · 从制品中来，到制品中去</div>
+    <div class="meta">DS v1.1 · 2026-07 · <a href="design-system.md">design-system.md</a></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var bar = document.getElementById('zgProgress');
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? h.scrollTop / max : 0) + ')';
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var links = document.querySelectorAll('.zd-nav a');
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        links.forEach(function (a) { a.classList.remove('active'); });
+        var a = map[e.target.id];
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('.zd-sec').forEach(function (s) { io.observe(s); });
+})();
+</script>
+
+</body>
+</html>
